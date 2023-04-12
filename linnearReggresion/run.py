@@ -1,35 +1,17 @@
-from random import randrange
-
-from linnearReggresion.trainingData.model.trainedDataModel import SingleDataModel, TrainedDataModelJson, \
+from linnearReggresion.trainingData.domSrv.dataNoise import make_noise
+from linnearReggresion.trainingData.model.trainedDataModel import TrainedDataModelJson, \
     TrainedDataModel
-from trainingData.infr.dataFilesOperations import readData
+from trainingData.infr.dataFilesOperations import read_data, save_data
 
-def makeSingleNoise(n, range=100):
-    x = (randrange(range) - range/2)/1000
-    return n + x
-
-def makeNoise(n):
-    #deklaracja klonów
-    noiseDataParams = []
-    noiseData = []
-    for i in range(2):
-        noiseDataParams.append([])
-    #wypelnienie klonów zaszumionymi wartosciami
-    for i in n.params:
-        for j in noiseDataParams:
-            j.append(makeSingleNoise(i))
-    for i in noiseDataParams:
-        noiseData.append(SingleDataModel(i, makeSingleNoise(n.value)))
-
-    noiseData.append(n)
-    return noiseData;
-
-data = TrainedDataModelJson(readData('singleParameter/data.json'))
+data = TrainedDataModelJson(read_data('singleParameter/data.json'))
 newSet = []
 for singleData in data.values:
-    xd = makeNoise(singleData)
+    xd = make_noise(singleData)
     for i in xd:
         newSet.append(i)
 
-data2 = TrainedDataModel(newSet)
+data2 = TrainedDataModel(newSet, data.options)
 data2.print()
+# print(data2.values[0].params)
+
+save_data('singleParameter/data2.json', data2.jsonFormat())

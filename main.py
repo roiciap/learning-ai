@@ -1,8 +1,8 @@
 from random import randrange
 
-from linnearReggresion.trainingData.infr.dataFilesOperations import readData
+from linnearReggresion.trainingData.infr.dataFilesOperations import read_data
 
-data = readData('data.json')
+data = read_data('data.json')
 newSet = []
 for singleData in data:
     sdCopies = [data[singleData]]
