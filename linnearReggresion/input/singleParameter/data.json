@@ -1,5 +1,15 @@
 {
+  "paramsSize": 1,
+  "trainingRate": 0.01,
   "options": {
+    "begin": {
+      "b": 1,
+      "w": [
+        2
+      ]
+    }
+  },
+  "dataOptions": {
     "params": [
       {
         "transformation": []
